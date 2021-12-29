@@ -35,7 +35,10 @@ def index(id: Optional[str] = None, gender: Optional[str] = None):
 
 @app.get("/students/{id}")
 def index(id):
-    return Students[id]
+    if id in Students:
+        return Students[id]
+    else:
+        return "ID Does Not Exist"
 
 
 @app.post("/students/")
