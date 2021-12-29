@@ -20,6 +20,13 @@ Students = dict(zip(IDs, StudentInfo))
 Based_On_Gender = {}
 
 
+def Datainput(id, student: NewStudents):
+    Students[id] = {"name": student.name,
+                    "major": student.major,
+                    "gender": student.gender}
+    return student
+
+
 @app.get("/students")
 def index(id: Optional[str] = None, gender: Optional[str] = None):
     if id == None and gender == None:
@@ -44,9 +51,7 @@ def index(id):
 @app.post("/students/")
 async def Add_New(student: NewStudents):
     NextID = str(len(Students)+1)
-    Students[NextID] = {"name": student.name,
-                        "major": student.major,
-                        "gender": student.gender}
+    Datainput(NextID, student)
     return student
 
 
@@ -64,15 +69,13 @@ def delete_student(id: int):
 async def Put_Student(id, student: NewStudents):
     if id in Students:
         Students.pop(id)
-        Students[id] = {"name": student.name,
-                        "major": student.major,
-                        "gender": student.gender}
+        Datainput(id, student)
         return student
     else:
         return"ID Does Not Exist"
 
 
-@app.patch("/student/{id}", response_model=NewStudents)
+@app.patch("/student/{id}")
 async def update_student(id: str, student: NewStudents):
     stored_item_data = Students[id]
     stored_item_model = NewStudents(**stored_item_data)
