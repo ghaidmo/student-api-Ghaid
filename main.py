@@ -52,8 +52,10 @@ async def Add_New(student: NewStudents):
 
 @app.delete("/students/{id}")
 def delete_student(id: int):
-    if id in Students:
-        Students.pop(id)
+    DeleteID = str(id)
+    if DeleteID in Students:
+        Students.pop(DeleteID)
+        return"user deleted"
     else:
         return "No Matching Student ID"
 
