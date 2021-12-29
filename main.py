@@ -55,7 +55,7 @@ def delete_student(id: int):
     DeleteID = str(id)
     if DeleteID in Students:
         Students.pop(DeleteID)
-        return"user deleted"
+        return"user deleted "
     else:
         return "No Matching Student ID"
 
@@ -64,11 +64,12 @@ def delete_student(id: int):
 async def Put_Student(id, student: NewStudents):
     if id in Students:
         Students.pop(id)
-
-    Students[id] = {"name": student.name,
-                    "major": student.major,
-                    "gender": student.gender}
-    return student
+        Students[id] = {"name": student.name,
+                        "major": student.major,
+                        "gender": student.gender}
+        return student
+    else:
+        return"ID Does Not Exist"
 
 
 @app.patch("/student/{id}", response_model=NewStudents)
